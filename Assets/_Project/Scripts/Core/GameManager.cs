@@ -6,28 +6,36 @@ namespace FlappyBird.Core
 {
     public class GameManager : MonoBehaviour
     {
+        private const string HIGH_SCORE_KEY = "HIGH_SCORE";
+
         public static GameManager Instance { get; private set; }
         public GameState CurrentState { get; private set; } = GameState.Menu;
-        public int Score { get; private set; } = 0;
+        public int Score { get; private set; }
+        public int HighScore { get; private set; }
 
         public event Action<GameState> OnGameStateChanged;
         public event Action<int> OnScoreChanged;
 
         private void Awake()
         {
-            if (Instance is not null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            LoadHighScore();
         }
 
         private void Start()
         {
-            SetState(GameState.Playing);
+            SetState(GameState.Menu);
+        }
+
+        private void LoadHighScore()
+        {
+            HighScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY, 0);
+        }
+
+        private void SaveHighScore()
+        {
+            PlayerPrefs.SetInt(HIGH_SCORE_KEY, HighScore);
+            PlayerPrefs.Save();
         }
 
         public void StartGame()
@@ -39,6 +47,12 @@ namespace FlappyBird.Core
 
         public void GameOver()
         {
+            if (Score > HighScore)
+            {
+                HighScore = Score;
+                SaveHighScore();
+            }
+
             SetState(GameState.GameOver);
         }
 
