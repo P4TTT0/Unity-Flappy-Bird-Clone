@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: eb4995576ef4d7b4ea34b023ae4cb2c1
+guid: 35494bd04fa63974e8223ef2c22cbf78
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3064529277814405736
-    second: flappy-bird_0
+      213: 4130640169021434097
+    second: 5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flappy-bird_0
+      name: 5_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 600
-        height: 449
+        width: 24
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8958610cbda9875d0800000000000000
-      internalID: -3064529277814405736
+      spriteID: 1f86b71495bf25930800000000000000
+      internalID: 4130640169021434097
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      flappy-bird_0: -3064529277814405736
+      5_0: 4130640169021434097
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
