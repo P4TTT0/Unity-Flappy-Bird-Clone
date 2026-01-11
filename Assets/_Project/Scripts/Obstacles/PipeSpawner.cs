@@ -5,6 +5,9 @@ namespace FlappyBird.Obstacles
 {
     public class PipeSpawner : MonoBehaviour
     {
+        [Header("Debug")]
+        [SerializeField] private bool _generatePipes = true;
+
         [Header("Spawn")]
         [SerializeField] private GameObject _pipePrefab;
         [SerializeField] private float _spawnInterval = 2f;
@@ -32,6 +35,9 @@ namespace FlappyBird.Obstacles
 
         private void SpawnPipe()
         {
+            if (!_generatePipes)
+                return;
+
             float randomY = Random.Range(_minY, _maxY);
             Vector3 spawnPosition = new Vector3(transform.position.x, randomY, 0f);
 
