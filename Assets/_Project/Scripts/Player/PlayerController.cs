@@ -1,6 +1,5 @@
+using FlappyBird.Audio;
 using FlappyBird.Core;
-using System;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +8,9 @@ namespace FlappyBird.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour
     {
+        [Header("Debug")]
+        [SerializeField] private bool _isInmortal = false;
+
         [Header("Movement")]
         [SerializeField] private float _jumpForce = 5f;
 
@@ -22,16 +24,24 @@ namespace FlappyBird.Player
         [SerializeField] private float _deathJumpForce = 3f;
         [SerializeField] private float _deathGravityScale = 3f;
 
+        [Header("Squash & Stretch")]
+        [SerializeField] private float _squashX = 0.85f;
+        [SerializeField] private float _stretchY = 1.15f;
+        [SerializeField] private float _squashSpeed = 12f;
+
         private Rigidbody2D _rigidbody;
+        private Vector3 _originalScale;
         private bool _isAlive = true;
         private float _timeSinceJumpSeconds = 0f;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidbody.simulated = false;
+            _originalScale = transform.localScale;
         }
 
-        private void OnEnable()
+        private void Start()
         {
             if (GameManager.Instance != null)
                 GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
@@ -61,6 +71,16 @@ namespace FlappyBird.Player
 
             _timeSinceJumpSeconds += Time.deltaTime;
             UpdateRotation();
+            SmoothResetScale();
+        }
+
+        private void SmoothResetScale()
+        {
+            transform.localScale = Vector3.Lerp(
+                transform.localScale,
+                _originalScale,
+                _squashSpeed * Time.deltaTime
+            );
         }
 
         private void Jump()
@@ -71,6 +91,18 @@ namespace FlappyBird.Player
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
             // Resetear el timer del salto
             _timeSinceJumpSeconds = 0f;
+
+            ApplySquashAndStretch();
+            AudioManager.Instance?.PlayWing();
+        }
+
+        private void ApplySquashAndStretch()
+        {
+            transform.localScale = new Vector3(
+                _originalScale.x * _squashX,
+                _originalScale.y * _stretchY,
+                _originalScale.z
+            );
         }
 
         /// <summary>
@@ -110,6 +142,9 @@ namespace FlappyBird.Player
 
             _isAlive = false;
 
+            // Reset de escala
+            transform.localScale = _originalScale;
+
             // Reset de velocidad
             _rigidbody.linearVelocity = Vector2.zero;
 
@@ -130,19 +165,45 @@ namespace FlappyBird.Player
 
             // Shake de cámara
             CameraShake.Instance?.Shake();
+            AudioManager.Instance?.PlayHit();
+            AudioManager.Instance?.PlayDie();
         }
 
         private void HandleGameStateChanged(GameState state)
         {
-            if (state == GameState.GameOver)
+            switch (state)
             {
-                _isAlive = false;
+                case GameState.Menu:
+                    DisablePhysics();
+                    break;
+
+                case GameState.Playing:
+                    EnablePhysics();
+                    break;
+
+                case GameState.GameOver:
+                    _isAlive = false;
+                    break;
             }
+        }
+
+        private void DisablePhysics()
+        {
+            _rigidbody.simulated = false;
+            _rigidbody.linearVelocity = Vector2.zero;
+        }
+
+        private void EnablePhysics()
+        {
+            _rigidbody.simulated = true;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (!_isAlive)
+                return;
+
+            if (_isInmortal)
                 return;
 
             if (collision.collider.CompareTag("Obstacle") || collision.collider.CompareTag("Ground"))
