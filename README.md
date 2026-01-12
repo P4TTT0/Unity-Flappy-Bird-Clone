@@ -52,7 +52,7 @@ You can play the game directly on itch.io:
 ### Option B — Open in Unity
 1. Clone this repository:
    ```bash
-   git clone https://github.com/<your-user>/<your-repo>.git
+   https://github.com/P4TTT0/Unity-Flappy-Bird-Clone.git
    ```
 2. Open Unity Hub
 3. Click **Add project**
