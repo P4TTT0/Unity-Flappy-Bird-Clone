@@ -45,5 +45,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3773871715
+    locked: 0
+  - name: Obstacles
+    uniqueID: 3636851865
+    locked: 0
+  - name: Ground
+    uniqueID: 2673002483
+    locked: 0
+  - name: Player
+    uniqueID: 3269461655
+    locked: 0
+  - name: UI
+    uniqueID: 3426840397
+    locked: 0
   m_RenderingLayers:
   - Default
