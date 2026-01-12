@@ -1,5 +1,7 @@
 # Flappy Bird Clone (Unity)
 
+![brave_UY0qPchPyE](https://github.com/user-attachments/assets/ee1bfc18-c6cb-46e2-ac9b-54221ad60353)
+
 An unofficial **Flappy Bird-inspired clone** built in **Unity** as a learning project.
 
 > **Disclaimer:**  
@@ -61,12 +63,6 @@ You can play the game directly on itch.io:
 
 ---
 
-## 📸 Screenshots
-
-*(Optional: add screenshots or GIFs here)*
-
----
-
 ## 📚 Learning Notes
 
 This project was made step-by-step as part of a personal Unity roadmap.  
@@ -84,5 +80,5 @@ You are free to explore the code, but please do not use it for monetized clones 
 ## 👤 Author
 
 Made by **P4TTT0**  
-- GitHub: https://github.com/<your-user>
+- GitHub: https://github.com/P4TTT0
 - itch.io: https://p4ttt0.itch.io/
