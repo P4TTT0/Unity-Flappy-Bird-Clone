@@ -75,15 +75,19 @@ public class InfoModalController : MonoBehaviour
         _animationRoutine = StartCoroutine(SlideRoutine(from, to, onComplete));
     }
 
+    // Se utiliza una corrutina para animar el deslizamiento de la tarjeta. Se anima frame a frame hasta completar la duración especificada.
     private IEnumerator SlideRoutine(Vector2 from, Vector2 to, System.Action? onComplete)
     {
         float elapsed = 0f;
 
         while (elapsed < _slideDuration)
         {
-            elapsed += Time.unscaledDeltaTime; 
+            // unscaledDetaleTime es lo mismo que deltaTime pero no se ve afectado por el timeScale, es decir, se usa cuando pausamos el juego
+            elapsed += Time.unscaledDeltaTime;
+            // t = porcentaje de completitud de la animación entre 0 y 1
             float t = Mathf.Clamp01(elapsed / _slideDuration);
 
+            // Easing cubic out: https://easings.net/#easeOutCubic
             float eased = 1f - Mathf.Pow(1f - t, 3f);
 
             _card.anchoredPosition = Vector2.LerpUnclamped(from, to, eased);

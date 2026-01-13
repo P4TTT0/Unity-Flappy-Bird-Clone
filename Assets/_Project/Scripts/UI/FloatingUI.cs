@@ -19,6 +19,9 @@ namespace FlappyBird.UI
 
         private void Update()
         {
+            // Se calcula el desplazamiento vertical usando una función seno
+            // El tiempo se multiplica por la frecuencia para controlar la velocidad del movimiento
+            // La amplitud controla la altura máxima del movimiento
             float offsetY = Mathf.Sin(Time.time * _frequency) * _amplitude;
             _rectTransform.anchoredPosition = _startPosition + Vector2.up * offsetY;
         }
